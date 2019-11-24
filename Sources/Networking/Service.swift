@@ -47,7 +47,7 @@ private extension URLSession.DataTaskPublisher {
 
 // MARK: - Subscribers.Completion helper
 
-@available(OSX 10.15, *)
+@available(OSX 10.15, iOS 13, *)
 extension Subscribers.Completion {
     var error: Error? {
         switch self {
