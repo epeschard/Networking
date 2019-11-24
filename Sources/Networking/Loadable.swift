@@ -27,9 +27,9 @@ public enum Loadable<T> {
         default: return false
         }
     }
-    public var entity: T? {
+    public var fetched: T? {
         switch self {
-        case let .loaded(entity): return entity
+        case let .loaded(fetched): return fetched
         case let .isLoading(last): return last
         default: return nil
         }
