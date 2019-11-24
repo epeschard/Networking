@@ -15,26 +15,26 @@ public enum Loadable<T> {
     case loaded(T)
     case failed(Error)
 
-    var isNotRequested: Bool {
+    public var isNotRequested: Bool {
         switch self {
         case .notRequested: return true
         default: return false
         }
     }
-    var isLoading: Bool {
+    public var isLoading: Bool {
         switch self {
         case .isLoading: return true
         default: return false
         }
     }
-    var value: T? {
+    public var value: T? {
         switch self {
         case let .loaded(value): return value
         case let .isLoading(last): return last
         default: return nil
         }
     }
-    var error: Error? {
+    public var error: Error? {
         switch self {
         case let .failed(error): return error
         default: return nil
