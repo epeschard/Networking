@@ -28,7 +28,7 @@ public extension APICall {
             throw APICallError.invalidURL
         }
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = headers
         request.httpBody = try body()
         return request
