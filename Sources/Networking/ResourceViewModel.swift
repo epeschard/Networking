@@ -52,7 +52,7 @@ public extension ResourceViewModel {
     }
     var shouldShowData: Property<Bool> {
         return shouldShowError.zip(resource)
-            .map({ !$0.0 && $0.1.value != nil })
+            .map({ !$0.0 && $0.1.entity != nil })
             .removeDuplicates()
             .eraseToAnyPublisher()
     }
