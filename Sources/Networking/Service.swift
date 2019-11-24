@@ -16,7 +16,7 @@ public protocol Service {
 
 @available(OSX 10.15, iOS 13, *)
 public extension Service {
-    func call<Value>(endpoint: APICall,
+    func call<Value>(endpoint: API,
                      httpCodes: HTTPCodes = .success) -> AnyPublisher<Value, Error> where Value: Decodable {
         do {
             let request = try endpoint.urlRequest(baseURL: baseURL)

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-public protocol APICall {
+public protocol API {
     var path: String { get }
     var method: HTTPMethod { get }
     var headers: [String: String]? { get }
@@ -22,7 +22,7 @@ public enum APICallError: Swift.Error {
     case unexpectedResponse
 }
 
-public extension APICall {
+public extension API {
     func urlRequest(baseURL: String) throws -> URLRequest {
         guard let url = URL(string: baseURL + path) else {
             throw APICallError.invalidURL
