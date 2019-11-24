@@ -1,3 +1,3 @@
 # Networking
 
-A description of this package.
+A networking layer written by Alexey Naumov in a SPM.
