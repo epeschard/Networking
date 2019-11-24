@@ -11,7 +11,7 @@ import Combine
 
 public protocol APICall {
     var path: String { get }
-    var method: String { get }
+    var method: HTTPMethod { get }
     var headers: [String: String]? { get }
     func body() throws -> Data?
 }
@@ -40,4 +40,8 @@ public typealias HTTPCodes = Range<HTTPCode>
 
 public extension HTTPCodes {
     static let success = 200 ..< 300
+}
+
+public enum HTTPMethod: String {
+    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
 }
