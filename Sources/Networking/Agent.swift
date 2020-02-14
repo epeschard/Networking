@@ -20,20 +20,6 @@ enum AgentError: Error {
     case type2
 }
 
-//@available(OSX 10.15, iOS 13, watchOS 6, *)
-//extension Agent {
-//    func run<T: Decodable>(_ request: URLRequest, _ decoder: JSONDecoder = JSONDecoder()) -> AnyPublisher<Response<T>, Error> {
-//        return URLSession.shared
-//            .dataTaskPublisher(for: request)
-//            .tryMap { result -> Response<T> in
-//                let value = try decoder.decode(T.self, from: result.data)
-//                return Response(value: value, response: result.response)
-//        }
-//        .receive(on: DispatchQueue.main)
-//        .eraseToAnyPublisher()
-//    }
-//}
-
 #if canImport(Combine)
 import Combine
 
@@ -74,30 +60,3 @@ extension Agent {
     }
 }
 #endif
-
-// MARK : - Example
-
-enum GithubAPI {
-    static let agent = Agent()
-    static let base = URL(string: "https://api.github.com")!
-}
-
-extension GithubAPI {
-    enum path: String {
-        case repos = "users/\(username)/repos"
-    }
-
-    static func urlRequest(for path: GithubAPI.path,
-                           with username: String) -> URLRequest {
-        return URLRequest(url: base.appendingPathComponent(path))
-    }
-
-
-    static func repos(username: String) -> AnyPublisher<[Repository], Error> {
-        let request = GithubAPI.urlRequest(for: .repos,
-                                           with: username
-        return agent.run(request)
-            .map(\.value)
-            .eraseToAnyPublisher()
-    }
-}
