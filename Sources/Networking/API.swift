@@ -1,13 +1,12 @@
 //
 //  APICall.swift
-//  CountriesSwiftUI
+//  Networking
 //
 //  Created by Alexey Naumov on 23.10.2019.
 //  Copyright © 2019 Alexey Naumov. All rights reserved.
 //
 
 import Foundation
-import Combine
 
 public protocol API {
     var path: String { get }
@@ -16,16 +15,18 @@ public protocol API {
     func body() throws -> Data?
 }
 
-public enum APICallError: Swift.Error {
+public enum APIError: Swift.Error {
     case invalidURL
     case httpCode(HTTPCode)
     case unexpectedResponse
 }
 
 public extension API {
-    func urlRequest(baseURL: String) throws -> URLRequest {
+    func urlRequest(baseURL: String,
+                    with headers: [String: String]? = nil)
+        throws -> URLRequest {
         guard let url = URL(string: baseURL + path) else {
-            throw APICallError.invalidURL
+            throw APIError.invalidURL
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue

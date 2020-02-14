@@ -1,6 +1,6 @@
 //
 //  Service.swift
-//  CountriesSwiftUI
+//  Networking
 //
 //  Created by Alexey Naumov on 23.10.2019.
 //  Copyright © 2019 Alexey Naumov. All rights reserved.
@@ -12,6 +12,7 @@ import Combine
 public protocol Service {
     var session: URLSession { get }
     var baseURL: String { get }
+    var bgQueue: DispatchQueue { get }
 }
 
 @available(OSX 10.15, iOS 13, *)
@@ -22,6 +23,8 @@ public extension Service {
             let request = try endpoint.urlRequest(baseURL: baseURL)
             return session
                 .dataTaskPublisher(for: request)
+                .subscribe(on: bgQueue)
+                .delay(for: .seconds(1), scheduler: bgQueue)
                 .requestJSON(httpCodes: httpCodes)
         } catch let error {
             return Fail<Value, Error>(error: error).eraseToAnyPublisher()
@@ -30,12 +33,13 @@ public extension Service {
 }
 
 @available(OSX 10.15, iOS 13, *)
-private extension URLSession.DataTaskPublisher {
+private extension Publisher where Output == URLSession.DataTaskPublisher.Output {
     func requestJSON<Value>(httpCodes: HTTPCodes) -> AnyPublisher<Value, Error> where Value: Decodable {
         return tryMap({
-                let code = ($0.1 as? HTTPURLResponse)?.statusCode ?? 200
+            assert(!Thread.isMainThread)
+            let code = ($0.1 as? HTTPURLResponse)?.statusCode ?? 200
                 guard httpCodes.contains(code) else {
-                    throw APICallError.httpCode(code)
+                    throw APIError.httpCode(code)
                 }
                 return $0.0
             })
