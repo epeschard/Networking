@@ -11,9 +11,13 @@ import Combine
 @available(OSX 10.15, iOS 13, *)
 public final class CancelBag {
     
-    var subscriptions = Set<AnyCancellable>()
+    var subscriptions: Set<AnyCancellable>
 
-    func cancel() {
+    public init() {
+        self.subscriptions = Set<AnyCancellable>()
+    }
+
+    public func cancel() {
         subscriptions.forEach { $0.cancel() }
         subscriptions.removeAll()
     }
