@@ -22,7 +22,7 @@ public enum APIError: Swift.Error {
 }
 
 extension APIError: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidURL: return "Invalid URL"
         case let .httpCode(code): return "Unexpected HTTP code: \(code)"

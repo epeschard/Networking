@@ -7,12 +7,6 @@
 //
 
 import Combine
-import Foundation
-
-public typealias ValueClosure<V> = (V) -> Void
 
 @available(OSX 10.15, iOS 13, *)
-public typealias Property<T> = AnyPublisher<T, Never>
-
-@available(OSX 10.15, iOS 13, *)
-public typealias Resource<T> = CurrentValueSubject<Loadable<T>, Never>
+public typealias Store<State> = CurrentValueSubject<State, Never>
