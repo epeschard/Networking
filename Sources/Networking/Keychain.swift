@@ -1,5 +1,5 @@
 //
-//  KeyChain.swift
+//  Keychain.swift
 //  Networking
 //
 //  Created by Eugene Peschard on 10/03/2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class KeyChain {
+public final class Keychain {
 
     class func getToken() -> String? {
         if let data = self.load(key: Token.key),
