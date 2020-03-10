@@ -9,8 +9,15 @@ import Foundation
 
 public final class Keychain {
 
+    var tokenKey: String
+
+    public init(with tokenKey: String) {
+        self.tokenKey = tokenKey
+        super.init
+    }
+
     class func getToken() -> String? {
-        if let data = self.load(key: Token.key),
+        if let data = self.load(key: tokenKey),
             let token = String(data: data, encoding: .utf8) {
             return token
         }
@@ -20,7 +27,7 @@ public final class Keychain {
     class func deleteToken() {
         let query = [
             kSecClass as String       : kSecClassGenericPassword as String,
-            kSecAttrAccount as String : Token.key] as [String : Any]
+            kSecAttrAccount as String : tokenKey] as [String : Any]
 
         SecItemDelete(query as CFDictionary)
     }
