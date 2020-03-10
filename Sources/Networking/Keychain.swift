@@ -7,13 +7,9 @@
 
 import Foundation
 
+let tokenKey = "token"
+
 public final class Keychain {
-
-    var tokenKey: String
-
-    public init(with tokenKey: String) {
-        self.tokenKey = tokenKey
-    }
 
     class func getToken() -> String? {
         if let data = self.load(key: tokenKey),
