@@ -13,7 +13,6 @@ public final class Keychain {
 
     public init(with tokenKey: String) {
         self.tokenKey = tokenKey
-        super.init
     }
 
     class func getToken() -> String? {
