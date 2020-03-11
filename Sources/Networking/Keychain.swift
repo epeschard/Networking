@@ -11,7 +11,7 @@ let tokenKey = "token"
 
 public final class Keychain {
 
-    class func getToken() -> String? {
+    public class func getToken() -> String? {
         if let data = self.load(key: tokenKey),
             let token = String(data: data, encoding: .utf8) {
             return token
@@ -19,7 +19,7 @@ public final class Keychain {
         return nil
     }
 
-    class func deleteToken() {
+    public class func deleteToken() {
         let query = [
             kSecClass as String       : kSecClassGenericPassword as String,
             kSecAttrAccount as String : tokenKey] as [String : Any]
@@ -27,7 +27,7 @@ public final class Keychain {
         SecItemDelete(query as CFDictionary)
     }
 
-    class func save(key: String, data: Data) -> OSStatus {
+    public class func save(key: String, data: Data) -> OSStatus {
         let query = [
             kSecClass as String       : kSecClassGenericPassword as String,
             kSecAttrAccount as String : key,
@@ -38,7 +38,7 @@ public final class Keychain {
         return SecItemAdd(query as CFDictionary, nil)
     }
 
-    class func load(key: String) -> Data? {
+    public class func load(key: String) -> Data? {
         let query = [
             kSecClass as String       : kSecClassGenericPassword,
             kSecAttrAccount as String : key,
