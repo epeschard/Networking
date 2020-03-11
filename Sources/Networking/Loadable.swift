@@ -41,6 +41,7 @@ public extension Loadable {
         case let .isLoading(value, cancelBag): return .isLoading(last: value.map { transform($0) },
                                                                  cancelBag: cancelBag)
         case let .loaded(value): return .loaded(transform(value))
+        case .unAuthorized: return .unAuthorized
         }
     }
 
@@ -71,7 +72,7 @@ extension Loadable: Equatable where T: Equatable {
         case let (.loaded(lhsV), .loaded(rhsV)): return lhsV == rhsV
         case let (.failed(lhsE), .failed(rhsE)):
             return lhsE.localizedDescription == rhsE.localizedDescription
-        case let (.unAuthorized, .unAuthorized): return true
+        case (.unAuthorized, .unAuthorized): return true
         default: return false
         }
     }
