@@ -18,12 +18,12 @@ public protocol WebRepository {
 @available(OSX 10.15, iOS 13, *)
 public extension WebRepository {
     func call<Value>(_ endpoint: API,
-                     with auth: [String: String]? = nil,
+                     with token: String? = nil,
                      httpCodes: HTTPCodes = .success) -> AnyPublisher<Value, Error>
         where Value: Decodable {
         do {
             let request = try endpoint.urlRequest(baseURL: baseURL,
-                                                  with: auth)
+                                                  with: token)
             return session
                 .dataTaskPublisher(for: request)
                 .requestJSON(httpCodes: httpCodes)

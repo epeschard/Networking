@@ -33,15 +33,19 @@ extension APIError: LocalizedError {
 
 public extension API {
     func urlRequest(baseURL: String,
-                    with headers: [String: String]? = nil)
+                    with token: String? = nil)
         throws -> URLRequest {
         guard let url = URL(string: baseURL + path) else {
             throw APIError.invalidURL
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        request.allHTTPHeaderFields = headers
         request.httpBody = try body()
+        request.setValue("application/json; charset=utf-8",
+                         forHTTPHeaderField: "Content-Type")
+        if let key = token {
+            request.setValue("token \(key)", forHTTPHeaderField: "Authorization")
+        }
         return request
     }
 }
