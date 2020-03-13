@@ -15,7 +15,6 @@ public enum Loadable<T> {
     case isLoading(last: T?, cancelBag: CancelBag)
     case loaded(T)
     case failed(Error)
-    case unAuthorized
 
     public var value: T? {
         switch self {
@@ -71,7 +70,6 @@ extension Loadable: Equatable where T: Equatable {
         case let (.loaded(lhsV), .loaded(rhsV)): return lhsV == rhsV
         case let (.failed(lhsE), .failed(rhsE)):
             return lhsE.localizedDescription == rhsE.localizedDescription
-        case let (.unAuthorized, .unAuthorized): return true
         default: return false
         }
     }
